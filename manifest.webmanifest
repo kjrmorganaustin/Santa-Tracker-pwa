@@ -1,17 +1,21 @@
 {
-  "name": "Github Page PWA",
-  "short_name": "GPPWA",
-  "description": "Github Page as a Progressive Web App",
-  "scope": "/github-page-pwa/",
-  "start_url": "/github-page-pwa/",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
-  "display": "standalone", 
+  "name": "Santa Countdown",
+  "short_name": "Santa Countdown",
+  "description": "Countdown to Santa's departure on Christmas Eve.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f5",
+  "theme_color": "#d32f2f",
   "icons": [
-      {
-        "src": "/github-page-pwa/img/icon.png",
-        "type": "image/png",
-        "sizes": "700x700"
-      }
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
