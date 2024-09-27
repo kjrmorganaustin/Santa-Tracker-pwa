@@ -1,52 +1,51 @@
-var GHPATH = '/github-page-pwa';
-var APP_PREFIX = 'gppwa_';
-var VERSION = 'version_002';
-var URLS = [    
-  `${GHPATH}/`,
-  `${GHPATH}/index.html`,
-  `${GHPATH}/css/styles.css`,
-  `${GHPATH}/img/icon.png`,
-  `${GHPATH}/js/app.js`
-]
+// Cache name and assets to cache
+const CACHE_NAME = 'christmas-pwa-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/css/styles.css',
+  '/js/app.js',
+  'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap',
+  'https://cdn-icons-png.flaticon.com/512/528/528098.png', // Example snowflake
+];
 
-var CACHE_NAME = APP_PREFIX + VERSION
-self.addEventListener('fetch', function (e) {
-  console.log('Fetch request : ' + e.request.url);
-  e.respondWith(
-    caches.match(e.request).then(function (request) {
-      if (request) { 
-        console.log('Responding with cache : ' + e.request.url);
-        return request
-      } else {       
-        console.log('File is not cached, fetching : ' + e.request.url);
-        return fetch(e.request)
-      }
-    })
-  )
-})
-
-self.addEventListener('install', function (e) {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      console.log('Installing cache : ' + CACHE_NAME);
-      return cache.addAll(URLS)
-    })
-  )
-})
-
-self.addEventListener('activate', function (e) {
-  e.waitUntil(
-    caches.keys().then(function (keyList) {
-      var cacheWhitelist = keyList.filter(function (key) {
-        return key.indexOf(APP_PREFIX)
+// Install event - caching static assets
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
       })
-      cacheWhitelist.push(CACHE_NAME);
-      return Promise.all(keyList.map(function (key, i) {
-        if (cacheWhitelist.indexOf(key) === -1) {
-          console.log('Deleting cache : ' + keyList[i] );
-          return caches.delete(keyList[i])
+  );
+});
+
+// Fetch event - serving cached content when offline
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) => {
+        // Cache hit - return response from cache
+        if (response) {
+          return response;
         }
-      }))
+        return fetch(event.request); // Fetch from network if not in cache
+      })
+  );
+});
+
+// Activate event - update cache
+self.addEventListener('activate', (event) => {
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName); // Delete old caches
+          }
+        })
+      );
     })
-  )
-})
+  );
+});
