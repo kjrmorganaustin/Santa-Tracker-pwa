@@ -9,8 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Manifest and Styles -->
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="canonical" href="https://codepo8.github.io/github-page-pwa/" />
+  <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="css/styles.css">
 
   <style>
@@ -55,21 +54,6 @@
       z-index: 2;
     }
 
-    /* Twinkling stars */
-    .star {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 1.5s infinite ease-in-out;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
-    }
-
     /* Falling Snow Animation */
     .snowflake {
       position: absolute;
@@ -104,30 +88,30 @@
       left: 50%;
     }
 
-    /* Rotating Ornaments */
+    /* Christmas Ornaments */
     .ornament {
       position: absolute;
-      width: 50px;
-      height: 50px;
-      background: url('https://cdn-icons-png.flaticon.com/512/897/897372.png') no-repeat center;
-      background-size: contain;
-      animation: rotateOrnament 10s infinite linear;
+      width: 60px;
+      height: 60px;
+      background-size: cover;
     }
 
-    @keyframes rotateOrnament {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .ornament:nth-child(odd) {
+    .ornament:nth-child(1) {
+      background-image: url('https://cdn.pixabay.com/photo/2018/12/04/15/22/christmas-3864551_960_720.png'); /* Example bell */
       top: 20%;
-      left: 15%;
+      left: 10%;
     }
 
-    .ornament:nth-child(even) {
-      top: 70%;
-      left: 85%;
-      animation-duration: 15s;
+    .ornament:nth-child(2) {
+      background-image: url('https://cdn.pixabay.com/photo/2013/07/13/10/24/candy-cane-157244_960_720.png'); /* Candy cane */
+      top: 30%;
+      left: 70%;
+    }
+
+    .ornament:nth-child(3) {
+      background-image: url('https://cdn.pixabay.com/photo/2018/11/20/17/40/christmas-3821877_960_720.png'); /* Christmas ornament */
+      top: 60%;
+      left: 20%;
     }
   </style>
 </head>
@@ -139,62 +123,7 @@
     <p id="date-result"></p> <!-- This paragraph will display the time remaining -->
   </div>
 
-  <!-- Falling snowflakes and rotating ornaments -->
+  <!-- Falling Snowflakes -->
   <div class="snowflake"></div>
   <div class="snowflake"></div>
-  <div class="snowflake"></div>
-  <div class="snowflake"></div>
-  
-  <div class="ornament"></div>
-  <div class="ornament"></div>
-
-  <!-- Add some twinkling stars -->
-  <div class="star" style="top: 5%; left: 30%;"></div>
-  <div class="star" style="top: 15%; left: 50%;"></div>
-  <div class="star" style="top: 10%; left: 70%;"></div>
-
-  <script>
-      // Service Worker registration for PWA
-      if (navigator.serviceWorker) {
-        navigator.serviceWorker.register (
-          '/github-page-pwa/sw.js',
-          {scope: '/github-page-pwa/'}
-        )
-      }
-
-      // Function to calculate and display the time remaining until the target date (Santa's departure)
-      function timeUntilSantaDeparts() {
-          const currentDate = new Date();
-          
-          // Set the target date to December 24th, 23:59:59 of the current year (Santa departs at midnight)
-          const targetDate = new Date(currentDate.getFullYear(), 11, 24, 23, 59, 59); // Month 11 is December
-
-          // Calculate the difference in milliseconds
-          const timeDifference = targetDate - currentDate;
-
-          // Check if the target date has already passed
-          if (timeDifference <= 0) {
-              document.getElementById("date-result").textContent = "Santa has already departed! Merry Christmas!";
-          } else {
-              // Convert timeDifference from milliseconds to days, hours, minutes, and seconds
-              const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-              const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-              const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-              const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-              // Display the result
-              document.getElementById("date-result").textContent = 
-                `Time until Santa departs: ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
-          }
-      }
-
-      // Call the timeUntilSantaDeparts function when the page loads
-      window.onload = timeUntilSantaDeparts;
-
-      // Optionally, you can make this update every second
-      setInterval(timeUntilSantaDeparts, 1000);
-  </script>
-
-  <script src="js/app.js"></script>
-</body>
 </html>
