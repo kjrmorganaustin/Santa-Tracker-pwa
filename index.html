@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Time Until Santa Departs</title>
+  <title>Santa Tracker PWA</title>
   
+  <link rel="canonical" href="https://kjrmorganaustin.github.io/Santa-Tracker-pwa/" />
+  <link rel="manifest" href="/Santa-Tracker-pwa/manifest.webmanifest">
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Manifest and Styles -->
-  <link rel="manifest" href="/manifest.webmanifest">
+  <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
 
   <style>
@@ -116,7 +118,6 @@
   </style>
 </head>
 <body>
- 
   <h1>Christmas Countdown</h1>
   <h2>Time Until Santa Departs</h2>
   <div class="time-box">
@@ -137,7 +138,7 @@
   <!-- Service Worker Registration -->
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')  // Correct service worker file
+      navigator.serviceWorker.register('/Santa-Tracker-pwa/sw.js', { scope: '/Santa-Tracker-pwa/' })  // Updated service worker registration path
         .then((registration) => {
           console.log('Service Worker registered with scope:', registration.scope);
         })
@@ -170,7 +171,5 @@
     // Update countdown every second
     setInterval(updateCountdown, 1000);
   </script>
-
-  <script src="js/app.js"></script>
 </body>
 </html>
